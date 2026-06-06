@@ -67,7 +67,7 @@ function Chat() {
         {/* Right Side */}
         <div className="bg-white w-105  h-80 rounded-3xl shadow-2xl p-2 flex flex-col items-center  justify-center ">
           <img
-            src="/src/assets/join-room.png"
+            src={joinRoomIcon}
             alt="room key"
             className="h-20 w-auto mb-4"
           />
