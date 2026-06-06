@@ -13,13 +13,38 @@ function Room() {
   
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    socket.emit("join_room", roomId);
+    function join() {
+      if (!roomId) return;
+      console.log("Socket connected, joining room:", roomId);
+      socket.emit("join_room", roomId);
+    }
+
+    if (socket && socket.connected) {
+      join();
+    } else {
+      socket.on("connect", join);
+    }
+
+    socket.on("connect_error", (err) => {
+      console.error("Socket connect error:", err);
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.warn("Socket disconnected:", reason);
+    });
+
+    return () => {
+      socket.off("connect", join);
+      socket.off("connect_error");
+      socket.off("disconnect");
+    };
   }, [roomId]);
   const sendMessage = () => {
     if (message === "") return;
 
     const data = { room: roomId, message: message };
 
+    console.log("Emitting send_message", data);
     socket.emit("send_message", data);
 
     setMessages((prev) => [...prev, data]);
@@ -28,13 +53,20 @@ function Room() {
   };
   useEffect(() => {
     const receiveHandler = (data) => {
+      console.log("Received message", data);
       setMessages((prev) => [...prev, data]);
     };
 
+    const joinedHandler = (data) => {
+      console.log("Joined room confirmed:", data);
+    };
+
     socket.on("receive_message", receiveHandler);
+    socket.on("joined", joinedHandler);
 
     return () => {
       socket.off("receive_message", receiveHandler);
+      socket.off("joined", joinedHandler);
     };
   }, []);
 

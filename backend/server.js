@@ -21,22 +21,14 @@ io.on("connection", (socket) => {
   console.log("User Connected:", socket.id);
 
   socket.on("join_room", (roomId) => {
-
     socket.join(roomId);
-
-    console.log(
-      `${socket.id} joined ${roomId}`
-    );
-
+    console.log(`${socket.id} joined ${roomId}`);
+    socket.emit("joined", { roomId, socketId: socket.id });
   });
 
   socket.on("send_message", (data) => {
-
-    socket.to(data.room).emit(
-      "receive_message",
-      data
-    );
-
+    console.log(`Message from ${socket.id} in room ${data.room}:`, data.message);
+    socket.to(data.room).emit("receive_message", data);
   });
 
   socket.on("disconnect", () => {
