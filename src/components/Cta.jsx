@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './all.css';
 import bgImage from '../assets/cta.png';
 
