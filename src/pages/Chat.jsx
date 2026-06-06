@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../assets/chat.png";
+import  roomKeyIcon from "../assets/room-key.png";
+import joinRoomIcon from "../assets/join-room.png";
 
 function Chat() {
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ function Chat() {
         {/* Left Side */}
         <div className="bg-white w-105  h-80 rounded-3xl shadow-2xl p-2 flex flex-col items-center  justify-center ">
           <img
-            src="/src/assets/room-key.png"
+            src={roomKeyIcon}
             alt="room key"
             className="h-20 w-auto mb-4"
           />
