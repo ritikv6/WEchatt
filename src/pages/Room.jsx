@@ -18,11 +18,6 @@ function Room() {
       console.log("Socket connected, joining room:", roomId);
       socket.emit("join_room", roomId);
     }
-    useEffect(() => {
-      messagesEndRef.current?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }, [messages]);
 
     if (socket && socket.connected) {
       join();
@@ -44,6 +39,11 @@ function Room() {
       socket.off("disconnect");
     };
   }, [roomId]);
+  
+  // scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   const sendMessage = () => {
     if (message === "") return;
 
