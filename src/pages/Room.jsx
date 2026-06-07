@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function Room() {
   const { roomId } = useParams();
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
+  const messagesEndRef = useRef(null);
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     function join() {
@@ -18,6 +18,11 @@ function Room() {
       console.log("Socket connected, joining room:", roomId);
       socket.emit("join_room", roomId);
     }
+    useEffect(() => {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, [messages]);
 
     if (socket && socket.connected) {
       join();
@@ -102,19 +107,21 @@ rounded-xl
 
       {/* Messages Area */}
 
-      <div
-        className="
+     <div className="
 flex-1
 overflow-y-auto
 p-8
 space-y-4
 max-h-[calc(100vh-180px)]
-"
-      >
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className="
+">
+
+{
+
+messages.map((msg,index)=>(
+
+<div
+key={index}
+className="
 bg-blue-600
 w-fit
 max-w-[70%]
@@ -123,11 +130,19 @@ py-3
 rounded-xl
 wrap-break-word
 "
-          >
-            {msg.message}
-          </div>
-        ))}
-      </div>
+>
+
+{msg.message}
+
+</div>
+
+))
+
+}
+
+<div ref={messagesEndRef}></div>
+
+</div>
       {/* Input Section */}
 
       <div
