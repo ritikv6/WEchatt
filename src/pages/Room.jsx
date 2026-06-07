@@ -10,7 +10,7 @@ function Room() {
   const { roomId } = useParams();
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  
+
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     function join() {
@@ -88,29 +88,27 @@ border-gray-700
         <h1 className="text-3xl font-bold">Room: {roomId}</h1>
 
         <button
-
-onClick={()=>navigate("/")}
-
-className="
+          onClick={() => navigate("/")}
+          className="
 bg-red-600
 px-5
 py-2
 rounded-xl
 "
-
->
-
-Leave
-
-</button>
+        >
+          Leave
+        </button>
       </div>
 
       {/* Messages Area */}
+
       <div
         className="
 flex-1
 overflow-y-auto
 p-8
+space-y-4
+max-h-[calc(100vh-180px)]
 "
       >
         {messages.map((msg, index) => (
@@ -119,26 +117,29 @@ p-8
             className="
 bg-blue-600
 w-fit
+max-w-[70%]
 px-5
 py-3
 rounded-xl
-mb-4
+wrap-break-word
 "
           >
             {msg.message}
           </div>
         ))}
       </div>
-
       {/* Input Section */}
 
       <div
         className="
 p-6
 border-t
-border-gray-700 
+border-gray-700
 flex
 gap-4
+sticky
+bottom-0
+bg-slate-900
 "
       >
         <input
