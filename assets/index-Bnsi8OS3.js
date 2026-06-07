@@ -25,19 +25,25 @@ rounded-xl\r
 flex-1\r
 overflow-y-auto\r
 p-8\r
+space-y-4\r
+max-h-[calc(100vh-180px)]\r
 `,children:i.map((e,t)=>(0,N.jsx)(`div`,{className:`\r
 bg-blue-600\r
 w-fit\r
+max-w-[70%]\r
 px-5\r
 py-3\r
 rounded-xl\r
-mb-4\r
+wrap-break-word\r
 `,children:e.message},t))}),(0,N.jsxs)(`div`,{className:`\r
 p-6\r
 border-t\r
-border-gray-700 \r
+border-gray-700\r
 flex\r
 gap-4\r
+sticky\r
+bottom-0\r
+bg-slate-900\r
 `,children:[(0,N.jsx)(`input`,{value:t,onChange:e=>n(e.target.value),onKeyDown:e=>{e.key===`Enter`&&o()},placeholder:`Type message...`,className:`\r
 flex-1\r
 px-5\r
